@@ -181,7 +181,7 @@ INSERT IGNORE INTO recurring_items (uuid_user, uuid_category, type, name, amount
 -- 7. 예산 — testuser (3개월)
 -- ─────────────────────────────────────────
 
-INSERT IGNORE INTO budgets (uuid_user, year_month, amount) VALUES
+INSERT IGNORE INTO budgets (uuid_user, `year_month`, amount) VALUES
     (@u_test, '2026-04', 2000000),
     (@u_test, '2026-05', 2000000),
     (@u_test, '2026-06', 2500000);
@@ -191,6 +191,6 @@ INSERT IGNORE INTO budgets (uuid_user, year_month, amount) VALUES
 -- 8. 예산 — alice (2개월)
 -- ─────────────────────────────────────────
 
-INSERT IGNORE INTO budgets (uuid_user, year_month, amount) VALUES
+INSERT IGNORE INTO budgets (uuid_user, `year_month`, amount) VALUES
     (@u_alice, '2026-05', 1500000),
     (@u_alice, '2026-06', 1500000);

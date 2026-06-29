@@ -60,6 +60,16 @@ curl http://localhost:8080/api/health
 
 ---
 
+## 테스트 계정 (V3 더미 데이터)
+
+| username | password | 데이터 |
+|---|---|---|
+| `testuser` | `password123` | 3개월 거래 내역, 고정항목 7개, 예산 3건 |
+| `alice` | `password123` | 2개월 거래 내역, 고정항목 3개, 예산 2건 |
+| `bob` | `password123` | 6월 거래 내역만 |
+
+---
+
 ## 환경변수 (운영 배포)
 
 `application-local.yml` 대신 아래 환경변수를 주입하면 됩니다.
@@ -90,12 +100,14 @@ MySQL DDL은 자동 커밋되어 롤백이 불가합니다. 아래 순서로 수
 **테이블만 초기화할 때** (DB는 유지)
 
 ```sql
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS recurring_items;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS budgets;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS flyway_schema_history;
+SET FOREIGN_KEY_CHECKS = 1;
 ```
 
 **DB 자체를 날렸을 때**
