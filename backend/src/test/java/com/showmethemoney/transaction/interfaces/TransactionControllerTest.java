@@ -6,6 +6,7 @@ import com.showmethemoney.auth.infrastructure.JwtTokenProvider;
 import com.showmethemoney.config.SecurityConfig;
 import com.showmethemoney.transaction.application.TransactionService;
 import com.showmethemoney.transaction.interfaces.dto.CreateTransactionRequest;
+import com.showmethemoney.transaction.interfaces.dto.TransactionPageResponse;
 import com.showmethemoney.transaction.interfaces.dto.TransactionResponse;
 import com.showmethemoney.transaction.interfaces.dto.UpdateTransactionRequest;
 import org.junit.jupiter.api.Test;
@@ -46,14 +47,19 @@ class TransactionControllerTest {
     }
 
     private static TransactionResponse sampleResponse() {
-        return new TransactionResponse(1L, 0, "FOOD", "식비",
+        return new TransactionResponse(1L, "0", "001", "식비",
                 new BigDecimal("15000"), "점심", LocalDate.of(2026, 6, 29));
+    }
+
+    private static TransactionPageResponse samplePageResponse() {
+        return new TransactionPageResponse(List.of(sampleResponse()), 1, 1,
+                BigDecimal.ZERO, new BigDecimal("15000"));
     }
 
     @Test
     void 내역_생성() throws Exception {
         CreateTransactionRequest request = new CreateTransactionRequest(
-                0, "FOOD", new BigDecimal("15000"), "점심", LocalDate.of(2026, 6, 29));
+                0, "001", new BigDecimal("15000"), "점심", LocalDate.of(2026, 6, 29));
 
         mockMvc.perform(post("/api/transactions")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -78,13 +84,13 @@ class TransactionControllerTest {
 
     @Test
     void 내역_목록조회() throws Exception {
-        given(transactionService.getList(eq(1L), any())).willReturn(List.of(sampleResponse()));
+        given(transactionService.getList(eq(1L), any())).willReturn(samplePageResponse());
 
         mockMvc.perform(get("/api/transactions").with(authentication(userAuth())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.length()").value(1))
-                .andExpect(jsonPath("$.data[0].categoryCode").value("FOOD"));
+                .andExpect(jsonPath("$.data.content.length()").value(1))
+                .andExpect(jsonPath("$.data.content[0].categoryCode").value("001"));
     }
 
     @Test

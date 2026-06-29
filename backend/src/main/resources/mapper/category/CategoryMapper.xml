@@ -21,10 +21,10 @@
         ORDER BY type, code_number
     </select>
 
-    <select id="findByCode" resultMap="CategoryResultMap">
+    <select id="findByCodeNumber" resultMap="CategoryResultMap">
         SELECT uuid, code, code_number, name, type
         FROM categories
-        WHERE code = #{code}
+        WHERE code_number = #{codeNumber}
     </select>
 
 </mapper>

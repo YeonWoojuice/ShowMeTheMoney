@@ -42,13 +42,13 @@ class UserControllerTest {
 
     @Test
     void 내정보_조회() throws Exception {
-        given(userService.getMe(1L)).willReturn(new UserResponse(1L, "test@example.com", "테스트"));
+        given(userService.getMe(1L)).willReturn(new UserResponse(1L, "testuser", "test@example.com", "테스트", "user"));
 
         mockMvc.perform(get("/api/users/me").with(authentication(userAuth())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.email").value("test@example.com"))
-                .andExpect(jsonPath("$.data.nickname").value("테스트"));
+                .andExpect(jsonPath("$.data.name").value("테스트"));
     }
 
     @Test

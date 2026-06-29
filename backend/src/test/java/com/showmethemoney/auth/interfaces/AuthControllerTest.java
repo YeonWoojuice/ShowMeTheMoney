@@ -61,7 +61,7 @@ class AuthControllerTest {
 
     @Test
     void 로그인_성공() throws Exception {
-        LoginRequest request = new LoginRequest("test@example.com", "password123");
+        LoginRequest request = new LoginRequest("testuser", "password123");
         LoginResponse response = new LoginResponse("sample.jwt.token", "Bearer", 86400L);
         given(authService.login(any())).willReturn(response);
 
@@ -76,7 +76,7 @@ class AuthControllerTest {
 
     @Test
     void 로그인_유효성검사_실패() throws Exception {
-        LoginRequest request = new LoginRequest("not-an-email", "");
+        LoginRequest request = new LoginRequest("", "");
 
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)

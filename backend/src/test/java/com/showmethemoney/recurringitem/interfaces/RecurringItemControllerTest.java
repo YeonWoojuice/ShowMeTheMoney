@@ -71,8 +71,8 @@ class RecurringItemControllerTest {
     @Test
     void 고정항목_목록조회() throws Exception {
         given(recurringItemService.getList(1L, null, null)).willReturn(List.of(
-                new RecurringItemResponse(1L, 0, "FOOD", "식비", "점심 구독",
-                        new BigDecimal("15000"), 15, true)
+                new RecurringItemResponse(1L, "0", "001", "식비", "점심 구독",
+                        new BigDecimal("15000"), 15, 1)
         ));
 
         mockMvc.perform(get("/api/recurring-items").with(authentication(userAuth())))

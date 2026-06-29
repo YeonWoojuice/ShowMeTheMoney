@@ -57,8 +57,8 @@ class DashboardControllerTest {
     @Test
     void 대시보드_카테고리별_지출_조회() throws Exception {
         given(dashboardService.getCategoryExpenses(1L, "202606", null)).willReturn(List.of(
-                new CategoryExpenseResponse("FOOD", "식비", new BigDecimal("300000"), 20.0),
-                new CategoryExpenseResponse("TRANSPORT", "교통", new BigDecimal("150000"), 10.0)
+                new CategoryExpenseResponse("001", "식비", new BigDecimal("300000"), 20.0),
+                new CategoryExpenseResponse("003", "교통", new BigDecimal("150000"), 10.0)
         ));
 
         mockMvc.perform(get("/api/dashboard/categories").param("yearMonth", "202606")
@@ -66,13 +66,13 @@ class DashboardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.length()").value(2))
-                .andExpect(jsonPath("$.data[0].categoryCode").value("FOOD"));
+                .andExpect(jsonPath("$.data[0].categoryCode").value("001"));
     }
 
     @Test
     void 대시보드_카테고리별_타입_필터() throws Exception {
         given(dashboardService.getCategoryExpenses(1L, "202606", 0)).willReturn(List.of(
-                new CategoryExpenseResponse("FOOD", "식비", new BigDecimal("300000"), 20.0)
+                new CategoryExpenseResponse("001", "식비", new BigDecimal("300000"), 20.0)
         ));
 
         mockMvc.perform(get("/api/dashboard/categories")
