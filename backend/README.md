@@ -46,10 +46,11 @@ jwt:
 ./gradlew bootRun
 ```
 
-서버 시작 시 Flyway가 자동으로 테이블 생성 및 카테고리 시드 데이터를 적용합니다.
+서버 시작 시 Flyway가 자동으로 아래 마이그레이션을 순서대로 적용합니다.
 
-- 테이블 생성: `V1__create_tables.sql`
-- 카테고리 시드: `V2__seed_categories.sql`
+- `V1` 테이블 생성
+- `V2` 카테고리 시드 데이터
+- `V3` 로컬 개발용 더미 데이터 (testuser / alice / bob, 비밀번호: `password123`)
 
 ### 4. 동작 확인
 
@@ -82,9 +83,11 @@ curl http://localhost:8080/api/health
 
 ---
 
-## Flyway 마이그레이션 실패 시 복구
+## DB 초기화 / 마이그레이션 실패 시 복구
 
 MySQL DDL은 자동 커밋되어 롤백이 불가합니다. 아래 순서로 수동 복구합니다.
+
+**테이블만 초기화할 때** (DB는 유지)
 
 ```sql
 DROP TABLE IF EXISTS recurring_items;
@@ -93,6 +96,12 @@ DROP TABLE IF EXISTS budgets;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS flyway_schema_history;
+```
+
+**DB 자체를 날렸을 때**
+
+```sql
+CREATE DATABASE showmethemoney CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 이후 앱을 재실행하면 V1부터 다시 적용됩니다.

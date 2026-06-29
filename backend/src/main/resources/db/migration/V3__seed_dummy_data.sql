@@ -6,7 +6,7 @@
 -- ─────────────────────────────────────────
 -- 1. 사용자
 -- ─────────────────────────────────────────
-INSERT INTO users (username, email, password, nickname) VALUES
+INSERT IGNORE INTO users (username, email, password, nickname) VALUES
     ('testuser', 'test@example.com',  '$2a$10$0FCRJE2JjUVEBh1oGeSUSe2GBOa7FPUHkR1M/7M2HP.S8Bsmr1TJu', '테스터'),
     ('alice',    'alice@example.com', '$2a$10$0FCRJE2JjUVEBh1oGeSUSe2GBOa7FPUHkR1M/7M2HP.S8Bsmr1TJu', '앨리스'),
     ('bob',      'bob@example.com',   '$2a$10$0FCRJE2JjUVEBh1oGeSUSe2GBOa7FPUHkR1M/7M2HP.S8Bsmr1TJu', '밥');
@@ -37,12 +37,12 @@ SET @u_bob   = (SELECT uuid FROM users WHERE username = 'bob');
 -- ─────────────────────────────────────────
 
 -- 2026-04 수입
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_salary,   1, 3000000, '4월 급여',        '2026-04-25'),
     (@u_test, @c_parttime, 1,  350000, '주말 알바',        '2026-04-30');
 
 -- 2026-04 지출
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_housing,   0,  650000, '4월 월세',         '2026-04-01'),
     (@u_test, @c_culture,   0,   55000, '헬스장 월정액',    '2026-04-01'),
     (@u_test, @c_transport, 0,    8500, '교통카드 충전',     '2026-04-01'),
@@ -59,12 +59,12 @@ INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transact
     (@u_test, @c_etc_exp,   0,   25000, '잡비',             '2026-04-20');
 
 -- 2026-05 수입
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_salary, 1, 3000000, '5월 급여',    '2026-05-25'),
     (@u_test, @c_invest, 1,  120000, '배당금 수령',  '2026-05-15');
 
 -- 2026-05 지출
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_housing,   0,  650000, '5월 월세',         '2026-05-01'),
     (@u_test, @c_culture,   0,   55000, '헬스장 월정액',    '2026-05-01'),
     (@u_test, @c_transport, 0,    8500, '교통카드 충전',     '2026-05-01'),
@@ -86,12 +86,12 @@ INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transact
     (@u_test, @c_etc_exp,   0,    8000, '잡비',             '2026-05-28');
 
 -- 2026-06 수입
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_salary,   1, 3000000, '6월 급여',     '2026-06-25'),
     (@u_test, @c_parttime, 1,  420000, '주말 알바',     '2026-06-15');
 
 -- 2026-06 지출
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_test, @c_housing,   0,  650000, '6월 월세',         '2026-06-01'),
     (@u_test, @c_culture,   0,   55000, '헬스장 월정액',    '2026-06-01'),
     (@u_test, @c_transport, 0,    8500, '교통카드 충전',     '2026-06-01'),
@@ -118,31 +118,31 @@ INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transact
 -- ─────────────────────────────────────────
 
 -- 2026-05
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
-    (@u_alice, @c_salary,  1, 2500000, '5월 급여',    '2026-05-25'),
-    (@u_alice, @c_housing, 0,  500000, '월세',         '2026-05-01'),
-    (@u_alice, @c_food,    0,   35000, '마트',         '2026-05-03'),
-    (@u_alice, @c_transport,0,   9000, '교통비',       '2026-05-05'),
-    (@u_alice, @c_food,    0,   28000, '편의점',       '2026-05-15'),
-    (@u_alice, @c_shopping,0,   95000, '쇼핑',         '2026-05-20');
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+    (@u_alice, @c_salary,   1, 2500000, '5월 급여',    '2026-05-25'),
+    (@u_alice, @c_housing,  0,  500000, '월세',         '2026-05-01'),
+    (@u_alice, @c_food,     0,   35000, '마트',         '2026-05-03'),
+    (@u_alice, @c_transport,0,    9000, '교통비',       '2026-05-05'),
+    (@u_alice, @c_food,     0,   28000, '편의점',       '2026-05-15'),
+    (@u_alice, @c_shopping, 0,   95000, '쇼핑',         '2026-05-20');
 
 -- 2026-06
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
-    (@u_alice, @c_salary,  1, 2500000, '6월 급여',     '2026-06-25'),
-    (@u_alice, @c_housing, 0,  500000, '월세',          '2026-06-01'),
-    (@u_alice, @c_food,    0,   42000, '마트',          '2026-06-04'),
-    (@u_alice, @c_transport,0,   8000, '교통비',        '2026-06-03'),
-    (@u_alice, @c_culture, 0,   17000, '넷플릭스',      '2026-06-05'),
-    (@u_alice, @c_cafe,    0,   15000, '카페',          '2026-06-10'),
-    (@u_alice, @c_shopping,0,  125000, '쇼핑',          '2026-06-12'),
-    (@u_alice, @c_food,    0,   38500, '외식',          '2026-06-18');
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+    (@u_alice, @c_salary,   1, 2500000, '6월 급여',     '2026-06-25'),
+    (@u_alice, @c_housing,  0,  500000, '월세',          '2026-06-01'),
+    (@u_alice, @c_food,     0,   42000, '마트',          '2026-06-04'),
+    (@u_alice, @c_transport,0,    8000, '교통비',        '2026-06-03'),
+    (@u_alice, @c_culture,  0,   17000, '넷플릭스',      '2026-06-05'),
+    (@u_alice, @c_cafe,     0,   15000, '카페',          '2026-06-10'),
+    (@u_alice, @c_shopping, 0,  125000, '쇼핑',          '2026-06-12'),
+    (@u_alice, @c_food,     0,   38500, '외식',          '2026-06-18');
 
 
 -- ─────────────────────────────────────────
 -- 4. 거래 내역 — bob (1개월)
 -- ─────────────────────────────────────────
 
-INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
+INSERT IGNORE INTO transactions (uuid_user, uuid_category, type, amount, memo, transaction_date) VALUES
     (@u_bob, @c_salary,   1, 3500000, '6월 급여',   '2026-06-25'),
     (@u_bob, @c_etc_inc,  1,  200000, '용돈',        '2026-06-01'),
     (@u_bob, @c_housing,  0,  700000, '월세',        '2026-06-01'),
@@ -157,24 +157,23 @@ INSERT INTO transactions (uuid_user, uuid_category, type, amount, memo, transact
 -- 5. 고정 수입/지출 — testuser
 -- ─────────────────────────────────────────
 
-INSERT INTO recurring_items (uuid_user, uuid_category, type, name, amount, billing_day, is_active) VALUES
-    (@u_test, @c_housing,   0, '월세',         650000,  1, 1),
-    (@u_test, @c_culture,   0, '헬스장',        55000,  1, 1),
-    (@u_test, @c_culture,   0, '넷플릭스',      17000,  5, 1),
-    (@u_test, @c_housing,   0, '핸드폰 요금',   55000,  5, 1),
-    (@u_test, @c_salary,    1, '급여',        3000000, 25, 1),
-    -- 비활성 항목 (QA용 필터 확인)
-    (@u_test, @c_transport, 0, '교통카드 자동충전', 50000, 10, 0),
-    (@u_test, @c_education, 0, '온라인 강의 구독',  80000,  2, 0);
+INSERT IGNORE INTO recurring_items (uuid_user, uuid_category, type, name, amount, billing_day, is_active) VALUES
+    (@u_test, @c_housing,   0, '월세',              650000,  1, 1),
+    (@u_test, @c_culture,   0, '헬스장',             55000,  1, 1),
+    (@u_test, @c_culture,   0, '넷플릭스',           17000,  5, 1),
+    (@u_test, @c_housing,   0, '핸드폰 요금',        55000,  5, 1),
+    (@u_test, @c_salary,    1, '급여',             3000000, 25, 1),
+    (@u_test, @c_transport, 0, '교통카드 자동충전',   50000, 10, 0),
+    (@u_test, @c_education, 0, '온라인 강의 구독',    80000,  2, 0);
 
 
 -- ─────────────────────────────────────────
 -- 6. 고정 수입/지출 — alice
 -- ─────────────────────────────────────────
 
-INSERT INTO recurring_items (uuid_user, uuid_category, type, name, amount, billing_day, is_active) VALUES
-    (@u_alice, @c_housing, 0, '월세',    500000, 1, 1),
-    (@u_alice, @c_culture, 0, '넷플릭스', 17000, 5, 1),
+INSERT IGNORE INTO recurring_items (uuid_user, uuid_category, type, name, amount, billing_day, is_active) VALUES
+    (@u_alice, @c_housing, 0, '월세',    500000,  1, 1),
+    (@u_alice, @c_culture, 0, '넷플릭스', 17000,  5, 1),
     (@u_alice, @c_salary,  1, '급여',   2500000, 25, 1);
 
 
@@ -182,7 +181,7 @@ INSERT INTO recurring_items (uuid_user, uuid_category, type, name, amount, billi
 -- 7. 예산 — testuser (3개월)
 -- ─────────────────────────────────────────
 
-INSERT INTO budgets (uuid_user, year_month, amount) VALUES
+INSERT IGNORE INTO budgets (uuid_user, year_month, amount) VALUES
     (@u_test, '2026-04', 2000000),
     (@u_test, '2026-05', 2000000),
     (@u_test, '2026-06', 2500000);
@@ -192,6 +191,6 @@ INSERT INTO budgets (uuid_user, year_month, amount) VALUES
 -- 8. 예산 — alice (2개월)
 -- ─────────────────────────────────────────
 
-INSERT INTO budgets (uuid_user, year_month, amount) VALUES
+INSERT IGNORE INTO budgets (uuid_user, year_month, amount) VALUES
     (@u_alice, '2026-05', 1500000),
     (@u_alice, '2026-06', 1500000);
