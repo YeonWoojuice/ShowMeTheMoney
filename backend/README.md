@@ -16,13 +16,7 @@ Spring Boot 3.5.6 / Java 21 / MyBatis / MySQL 8.x
 
 ## 로컬 실행
 
-### 1. DB 생성
-
-```sql
-CREATE DATABASE showmethemoney CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-### 2. 로컬 설정 파일 생성
+### 1. 로컬 설정 파일 생성
 
 `src/main/resources/application-local.yml` 파일을 생성합니다. (gitignore 대상)
 
@@ -40,7 +34,7 @@ jwt:
 
 > JWT secret 생성: `openssl rand -hex 32`
 
-### 3. 실행
+### 2. 실행
 
 ```bash
 ./gradlew bootRun
@@ -52,7 +46,7 @@ jwt:
 - `V2` 카테고리 시드 데이터
 - `V3` 로컬 개발용 더미 데이터 (testuser / alice / bob, 비밀번호: `password123`)
 
-### 4. 동작 확인
+### 3. 동작 확인
 
 ```bash
 curl http://localhost:8080/api/health
