@@ -50,7 +50,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white rounded-2xl shadow-md w-full max-w-sm px-8 py-10">
-        <h1 className="text-xl font-bold text-center mb-1">MoneyFlowOps</h1>
+        <h1 className="text-2xl font-bold text-center mb-1 text-gray-900">MoneyFlowOps</h1>
         <p className="text-xs text-gray-400 text-center mb-8">
           새 계정을 만들어 관리를 시작하세요
         </p>
