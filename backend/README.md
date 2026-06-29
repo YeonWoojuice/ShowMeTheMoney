@@ -16,23 +16,23 @@ Spring Boot 3.5.6 / Java 21 / MyBatis / MySQL 8.x
 
 ## 로컬 실행
 
-### 1. 로컬 설정 파일 생성
+### 1. 환경변수 설정
 
-`src/main/resources/application-local.yml` 파일을 생성합니다. (gitignore 대상)
+아래 환경변수를 설정합니다.
 
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/showmethemoney?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: YOUR_DB_USERNAME
-    password: YOUR_DB_PASSWORD
+| 환경변수 | 설명 | 기본값 |
+|---|---|---|
+| `DB_USERNAME` | DB 유저명 | — (필수) |
+| `DB_PASSWORD` | DB 비밀번호 | — (필수) |
+| `JWT_SECRET` | JWT 서명 키 | — (필수, `openssl rand -hex 32`로 생성) |
+| `DB_URL` | JDBC URL | `jdbc:mysql://localhost:3306/showmethemoney?createDatabaseIfNotExist=true&...` |
+| `JWT_EXPIRATION` | 토큰 만료 시간 (초) | `3600` |
 
-jwt:
-  secret: YOUR_JWT_SECRET   # openssl rand -hex 32
-  expiration: 86400          # 토큰 만료 시간 (초)
+```bash
+export DB_USERNAME=root
+export DB_PASSWORD=your_password
+export JWT_SECRET=$(openssl rand -hex 32)
 ```
-
-> JWT secret 생성: `openssl rand -hex 32`
 
 ### 2. 실행
 
@@ -63,19 +63,6 @@ curl http://localhost:8080/api/health
 | `bob` | `password123` | 6월 거래 내역만 |
 
 ---
-
-## 환경변수 (운영 배포)
-
-`application-local.yml` 대신 아래 환경변수를 주입하면 됩니다.
-
-| 환경변수 | 설명 | 기본값 |
-|---|---|---|
-| `DB_URL` | JDBC URL | `jdbc:mysql://localhost:3306/showmethemoney?...` |
-| `DB_USERNAME` | DB 유저명 | — |
-| `DB_PASSWORD` | DB 비밀번호 | — |
-| `JWT_SECRET` | JWT 서명 키 (hex 32바이트 이상) | — |
-| `JWT_EXPIRATION` | 토큰 만료 시간 (초) | `3600` |
-| `SPRING_PROFILES_ACTIVE` | 활성 프로파일 | `local` |
 
 ---
 
