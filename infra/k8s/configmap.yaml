@@ -5,5 +5,5 @@ metadata:
   namespace: showmethemoney
 data:
   SPRING_PROFILES_ACTIVE: "k8s"
-  DB_URL: "jdbc:mysql://mysql:3306/showmethemoney?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8"
+  DB_URL: "jdbc:mysql://mysql:3306/showmethemoney?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true"
   JWT_EXPIRATION: "3600"
