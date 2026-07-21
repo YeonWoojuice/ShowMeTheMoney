@@ -96,12 +96,12 @@ POST /auth/login
 **Request Body**
 | 필드 | 타입 | 필수 | 설명 |
 |---|---|---|---|
-| email | String | ✅ | 이메일 |
+| username | String | ✅ | 사용자명 |
 | password | String | ✅ | 비밀번호 |
 
 ```json
 {
-  "email": "hong@example.com",
+  "username": "hong123",
   "password": "password123"
 }
 ```
@@ -254,20 +254,28 @@ GET /transactions
 ```json
 {
   "success": true,
-  "data": [
-    {
-      "id": 1,
-      "type": 0,
-      "categoryCode": "FOOD",
-      "categoryName": "식비",
-      "amount": 15000,
-      "memo": "점심",
-      "transactionDate": "2026-06-29"
-    }
-  ],
+  "data": {
+    "content": [
+      {
+        "id": 1,
+        "type": "EXPENSE",
+        "categoryCode": "FOOD",
+        "categoryName": "식비",
+        "amount": 15000,
+        "memo": "점심",
+        "transactionAt": "2026-06-29"
+      }
+    ],
+    "totalElements": 72,
+    "totalPages": 4,
+    "totalIncome": 12890000,
+    "totalExpense": 5183900
+  },
   "error": null
 }
 ```
+
+`type`은 `"EXPENSE"`(지출) / `"INCOME"`(수입) 문자열입니다.
 
 ---
 
@@ -283,12 +291,12 @@ GET /transactions/{id}
   "success": true,
   "data": {
     "id": 1,
-    "type": 0,
+    "type": "EXPENSE",
     "categoryCode": "FOOD",
     "categoryName": "식비",
     "amount": 15000,
     "memo": "점심",
-    "transactionDate": "2026-06-29"
+    "transactionAt": "2026-06-29"
   },
   "error": null
 }
@@ -408,18 +416,20 @@ GET /recurring-items
   "data": [
     {
       "id": 1,
-      "type": 0,
+      "type": "EXPENSE",
       "categoryCode": "HOUSING",
       "categoryName": "주거 및 통신",
       "name": "월세",
       "amount": 500000,
       "billingDay": 1,
-      "isActive": true
+      "isActive": 1
     }
   ],
   "error": null
 }
 ```
+
+`type`은 `"EXPENSE"`(지출) / `"INCOME"`(수입) 문자열, `isActive`는 `1`(활성) / `0`(비활성) 입니다.
 
 ---
 
@@ -579,7 +589,7 @@ GET /dashboard/summary?yearMonth={yearMonth}
     "totalExpense": 1500000,
     "balance": 1500000,
     "budgetAmount": 2000000,
-    "usageRate": 75.0,
+    "budgetUsageRate": 75.0,
     "isOverBudget": false
   },
   "error": null
@@ -609,13 +619,13 @@ GET /dashboard/categories?yearMonth={yearMonth}
       "categoryCode": "FOOD",
       "categoryName": "식비",
       "amount": 300000,
-      "percentage": 20.0
+      "ratio": 20.0
     },
     {
       "categoryCode": "TRANSPORT",
       "categoryName": "교통",
       "amount": 150000,
-      "percentage": 10.0
+      "ratio": 10.0
     }
   ],
   "error": null
